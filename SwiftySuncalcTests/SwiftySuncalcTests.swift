@@ -73,9 +73,9 @@ class SwiftySuncalcTests: XCTestCase
                                    hour: 15, minute: 2, second: 52)
             // Moon test times
             try moonRise = newTestDate(year: 2013, month: 3, day: 4, zone: "GMT",
-                                       hour: 23, minute: 54, second: 29)
-            try moonSet = newTestDate(year: 2013, month: 3, day: 4, zone: "GMT",
-                                      hour: 7, minute: 47, second: 58)
+                                       hour: 23, minute: 54, second: 18)
+            try moonSet = newTestDate(year: 2013, month: 3, day: 5, zone: "GMT",
+                                      hour: 8, minute: 44, second: 29)
             // Latitude and longitude tests
             testLat = 50.5
             testLng = 30.5
