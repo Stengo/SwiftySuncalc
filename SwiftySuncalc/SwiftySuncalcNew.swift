@@ -56,6 +56,13 @@ public struct MoonSchedule: Equatable {
 }
 
 public enum SwiftySuncalcNew {
+    /**
+    Returns the relative position of the sun for a given time and place.
+
+    - parameters:
+        - date: The time for which to calculate the sun position.
+        - coordinate: The place for which to calculate the sun position.
+     */
     public static func sunPosition(
         for date: Date,
         at coordinate: Coordinate
@@ -71,6 +78,13 @@ public enum SwiftySuncalcNew {
         )
     }
     
+    /**
+    Returns significant time markers in the sun's cycle for a given day and place.
+
+    - parameters:
+        - date: The day for which to calculate the sun schedule.
+        - coordinate: The place for which to calculate the sun schedule.
+     */
     public static func sunSchedule(
         for date: Date,
         at coordinate: Coordinate
@@ -98,6 +112,14 @@ public enum SwiftySuncalcNew {
         )
     }
     
+    /**
+    Returns the time at which the sun reaches an angle for a given day and place.
+
+    - parameters:
+        - angle: The angle for which to calculate the time.
+        - date: The day for which to calculate the time.
+        - coordinate: The place for which to calculate the time.
+     */
     public static func time(
         ofSunAngle angle: Double,
         for date: Date,
@@ -117,6 +139,13 @@ public enum SwiftySuncalcNew {
         return times["angle"]!
     }
     
+    /**
+    Returns the relative position of the moon for a given time and place.
+
+    - parameters:
+        - date: The time for which to calculate the moon position.
+        - coordinate: The place for which to calculate the moon position.
+     */
     public static func moonPosition(
         for date: Date,
         at coordiante: Coordinate
@@ -134,6 +163,12 @@ public enum SwiftySuncalcNew {
         )
     }
     
+    /**
+    Returns the illumination of the moon for a given time and place.
+
+    - parameters:
+        - date: The time for which to calculate the moon illumination.
+     */
     public static func moonIllumination(
         for date: Date
     ) -> MoonIllumination {
@@ -145,6 +180,13 @@ public enum SwiftySuncalcNew {
         )
     }
     
+    /**
+    Returns significant time markers in the moon's cycle for a given day and place.
+
+    - parameters:
+        - date: The day for which to calculate the moon schedule.
+        - coordinate: The place for which to calculate the moon schedule.
+     */
     public static func moonSchedule(
         for date: Date,
         at coordinate: Coordinate
