@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6DF95C2925C7013400FCD5BD /* SwiftySuncalcNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF95C2825C7013400FCD5BD /* SwiftySuncalcNew.swift */; };
+		6DF95C2D25C7013E00FCD5BD /* SwiftySuncalcNewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF95C2C25C7013E00FCD5BD /* SwiftySuncalcNewTests.swift */; };
 		B847E25C209DBC19008E2B3D /* SwiftySuncalc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B847E25B209DBC19008E2B3D /* SwiftySuncalc.swift */; };
 		B847E269209DBC93008E2B3D /* SwiftySuncalcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B847E268209DBC93008E2B3D /* SwiftySuncalcTests.swift */; };
 		B847E26B209DBC93008E2B3D /* libSwiftySuncalc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B847E258209DBC19008E2B3D /* libSwiftySuncalc.a */; };
@@ -36,6 +38,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6DF95C2825C7013400FCD5BD /* SwiftySuncalcNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftySuncalcNew.swift; sourceTree = "<group>"; };
+		6DF95C2C25C7013E00FCD5BD /* SwiftySuncalcNewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftySuncalcNewTests.swift; sourceTree = "<group>"; };
 		B847E258209DBC19008E2B3D /* libSwiftySuncalc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSwiftySuncalc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B847E25B209DBC19008E2B3D /* SwiftySuncalc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftySuncalc.swift; sourceTree = "<group>"; };
 		B847E266209DBC93008E2B3D /* SwiftySuncalcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftySuncalcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				B847E25B209DBC19008E2B3D /* SwiftySuncalc.swift */,
+				6DF95C2825C7013400FCD5BD /* SwiftySuncalcNew.swift */,
 			);
 			path = SwiftySuncalc;
 			sourceTree = "<group>";
@@ -94,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				B847E268209DBC93008E2B3D /* SwiftySuncalcTests.swift */,
+				6DF95C2C25C7013E00FCD5BD /* SwiftySuncalcNewTests.swift */,
 				B847E26A209DBC93008E2B3D /* Info.plist */,
 			);
 			path = SwiftySuncalcTests;
@@ -189,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DF95C2925C7013400FCD5BD /* SwiftySuncalcNew.swift in Sources */,
 				B847E25C209DBC19008E2B3D /* SwiftySuncalc.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DF95C2D25C7013E00FCD5BD /* SwiftySuncalcNewTests.swift in Sources */,
 				B847E269209DBC93008E2B3D /* SwiftySuncalcTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,7 +361,9 @@
 		B847E26F209DBC93008E2B3D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TYPC962S4N;
 				INFOPLIST_FILE = SwiftySuncalcTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -370,7 +380,9 @@
 		B847E270209DBC93008E2B3D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TYPC962S4N;
 				INFOPLIST_FILE = SwiftySuncalcTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
