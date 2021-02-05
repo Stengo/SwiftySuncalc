@@ -32,15 +32,18 @@ final class SwiftySuncalcNewTests: XCTestCase {
     }
     
     func testTimeForSunAngle() {
-        let referenceTime = Date(year: 2013, month: 3, day: 5, zone: "UTC", hour: 7, minute: 23, second: 37)
+        let referenceSunAngleTimes = SunAngleTimes(
+            rising: Date(year: 2013, month: 3, day: 5, zone: "UTC", hour: 7, minute: 23, second: 37),
+            setting: Date(year: 2013, month: 3, day: 5, zone: "UTC", hour: 12, minute: 58, second: 16)
+        )
         
-        let time = SwiftySuncalcNew.time(
+        let sunAngleTimes = SwiftySuncalcNew.times(
             ofSunAngle: 23,
             for: referenceDay,
             at: referenceCoordinate
         )
         
-        XCTAssertEqual(time, referenceTime)
+        XCTAssertEqual(sunAngleTimes, referenceSunAngleTimes)
     }
     
     func testSunPosition() {

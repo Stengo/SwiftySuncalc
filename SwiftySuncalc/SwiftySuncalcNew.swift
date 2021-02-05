@@ -55,6 +55,11 @@ public struct MoonSchedule: Equatable {
     let set: Date?
 }
 
+public struct SunAngleTimes: Equatable {
+    let rising: Date
+    let setting: Date
+}
+
 public enum SwiftySuncalcNew {
     /**
     Returns the relative position of the sun for a given time and place.
@@ -120,23 +125,27 @@ public enum SwiftySuncalcNew {
         - date: The day for which to calculate the time.
         - coordinate: The place for which to calculate the time.
      */
-    public static func time(
+    public static func times(
         ofSunAngle angle: Double,
         for date: Date,
         at coordinate: Coordinate
-    ) -> Date {
-        let name = "angle"
+    ) -> SunAngleTimes {
+        let rising = "rising"
+        let setting = "setting"
         suncalc.addTime(
             angle: angle,
-            riseName: name,
-            setName: ""
+            riseName: rising,
+            setName: setting
         )
         let times = suncalc.getTimes(
             date: date,
             lat: coordinate.latitude,
             lng: coordinate.longitude
         )
-        return times["angle"]!
+        return SunAngleTimes(
+            rising: times[rising]!,
+            setting: times[setting]!
+        )
     }
     
     /**
