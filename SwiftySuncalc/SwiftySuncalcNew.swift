@@ -60,6 +60,11 @@ public struct SunAngleTimes: Equatable {
     let setting: Date
 }
 
+private struct SunCoordinates: Equatable {
+    let declination: Double
+    let rightAscension: Double
+}
+
 public enum SwiftySuncalcNew {
     /**
     Returns the relative position of the sun for a given time and place.
@@ -72,14 +77,16 @@ public enum SwiftySuncalcNew {
         for date: Date,
         at coordinate: Coordinate
     ) -> SunPosition {
-        let sunPosition = suncalc.getPosition(
-            date: date,
-            lat: coordinate.latitude,
-            lng: coordinate.longitude
-        )
+        let longitude = radians(for: -coordinate.longitude)
+        let latitude = radians(for: coordinate.latitude)
+        let daysSince2000 = date.daysSince2000
+        
+        let sunCoordinates = self.sunCoordinates(forDaysSince2000: daysSince2000)
+        let hourAngle = siderealTime(forDaysSince2000: daysSince2000, longitude: longitude) - sunCoordinates.rightAscension
+        
         return SunPosition(
-            azimuth: sunPosition["azimuth"]!,
-            altitude: sunPosition["altitude"]!
+            azimuth: azimuth(forHourAngle: hourAngle, latitude: latitude, declination: sunCoordinates.declination),
+            altitude: altitude(forHourAngle: hourAngle, latitude: latitude, declination: sunCoordinates.declination)
         )
     }
     
@@ -209,5 +216,87 @@ public enum SwiftySuncalcNew {
             rise: moonTimes["rise"]!,
             set: moonTimes["set"]!
         )
+    }
+    
+    private static let obliquityOfTheEcliptic = radians(for: 23.4397)
+    
+    static private func radians(for degrees: Double) -> Double {
+        return degrees * .pi / 180.0
+    }
+    
+    static private func azimuth(forHourAngle hourAngle: Double, latitude: Double, declination: Double) -> Double {
+        return atan2(
+            sin(hourAngle),
+            cos(hourAngle) * sin(latitude) - tan(declination) * cos(latitude)
+        )
+    }
+    
+    static private func altitude(forHourAngle hourAngle: Double, latitude: Double, declination: Double) -> Double {
+        return asin(sin(latitude) * sin(declination) + cos(latitude) * cos(declination) * cos(hourAngle))
+    }
+    
+    static private func siderealTime(forDaysSince2000 daysSince2000: Double, longitude: Double) -> Double {
+        let siderealTimeAtLongitudeZeroAtStartOf2000 = 280.16
+        let rotationPerDay = 360.9856235
+        let siderealTimeAtLongitudeZero = siderealTimeAtLongitudeZeroAtStartOf2000 + (rotationPerDay * daysSince2000)
+        return radians(for: siderealTimeAtLongitudeZero) - longitude
+    }
+    
+    static private func sunCoordinates(forDaysSince2000 daysSince2000: Double) -> SunCoordinates {
+        let solarMeanAnomaly = self.solarMeanAnomaly(forDaysSince2000: daysSince2000)
+        let eclipticLongitude = self.eclipticLongitude(forSolarMeanAnomaly: solarMeanAnomaly)
+        let declination = self.declination(forEclipticLongitude: eclipticLongitude)
+        let rightAcension = self.rightAscension(forEclipticLongitude: eclipticLongitude)
+        return SunCoordinates(
+            declination: declination,
+            rightAscension: rightAcension
+        )
+    }
+    
+    static private func solarMeanAnomaly(forDaysSince2000 daysSince2000: Double) -> Double {
+        let meanAnomalyAtStartOf2000 = 357.5291
+        let rateOfChange = 0.98560028
+        let meanAnomaly = meanAnomalyAtStartOf2000 + (rateOfChange * daysSince2000)
+        return radians(for: meanAnomaly)
+    }
+    
+    static private func eclipticLongitude(forSolarMeanAnomaly solarMeanAnomaly: Double) -> Double {
+        let equationOfTheCenter = self.equationOfTheCenter(forSolarMeanAnomaly: solarMeanAnomaly)
+        let perihelion = radians(for: 102.9372)
+        return solarMeanAnomaly + equationOfTheCenter + perihelion + .pi
+    }
+    
+    static private func equationOfTheCenter(forSolarMeanAnomaly solarMeanAnomaly: Double) -> Double {
+        return radians(for: 1.9148 * sin(solarMeanAnomaly) + 0.02 * sin(2.0 * solarMeanAnomaly) + 0.0003 * sin(3.0 * solarMeanAnomaly))
+    }
+    
+    static private func declination(forEclipticLongitude eclipticLongitude: Double) -> Double {
+        return asin(sin(eclipticLongitude) * sin(obliquityOfTheEcliptic))
+    }
+    
+    static private func rightAscension(forEclipticLongitude eclipticLongitude: Double) -> Double {
+        return atan2(
+            sin(eclipticLongitude) * cos(obliquityOfTheEcliptic),
+            cos(eclipticLongitude)
+        )
+    }
+}
+
+private let secondsPerDay: Double = 60 * 60 * 24
+private let julianDaysUntil1970: Double = 2440588
+private let julianDaysUntil2000: Double = 2451545
+private extension Date {
+    var julianDays: Double {
+        let daysSince1970 = timeIntervalSince1970 / secondsPerDay
+        return Double(daysSince1970 - 0.5 + julianDaysUntil1970)
+    }
+    
+    var daysSince2000: Double {
+        return julianDays - julianDaysUntil2000
+    }
+    
+    init(julianDays: Double) {
+        let daysSince1970 = julianDays + 0.5 - julianDaysUntil1970
+        self.init(timeIntervalSince1970: daysSince1970 * secondsPerDay)
     }
 }
